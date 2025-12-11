@@ -7,12 +7,14 @@ interface ScoreCardProps {
 }
 
 export function ScoreCard({ score, totalQuestions, passingScore }: ScoreCardProps) {
-  const isPassing = score >= passingScore
-  const scoreColor = isPassing ? 'bg-green-400' : 'bg-secondary-background'
+  const getScoreColor = () => {
+    if (score === 0) return 'bg-secondary-background'
+    return score >= passingScore ? 'bg-green-400' : 'bg-red-400'
+  }
 
   return (
     <div className="fixed left-4 top-24 z-40 hidden lg:block">
-      <Card className={`${scoreColor} transition-colors border-4 w-48`}>
+      <Card className={`${getScoreColor()} transition-colors border-4 w-48`}>
         <CardHeader>
           <CardTitle className="text-lg text-center">Score</CardTitle>
         </CardHeader>
@@ -32,9 +34,15 @@ export function ScoreCard({ score, totalQuestions, passingScore }: ScoreCardProp
             </div>
           </div>
           
-          {score >= passingScore && (
+          {score >= passingScore && score > 0 && (
             <div className="text-center font-heading text-sm">
               ✓ Passed!
+            </div>
+          )}
+          
+          {score > 0 && score < passingScore && (
+            <div className="text-center font-heading text-sm">
+              ✗ Failed
             </div>
           )}
         </CardContent>
