@@ -1,13 +1,22 @@
 import './App.css'
-import { Button } from '@/components/ui/button'
-
+import { NavBar } from './components/NavBar'
+import { SearchBox } from './components/SearchBox'
+import { useState } from 'react'
 
 function App() {
+  const [searchText, setSearchText] = useState('')
+
+  const handleSearch = (text: string) => {
+    setSearchText(text)
+  }
 
   return (
     <>
-      <h1>QuizMe</h1>
-      <Button>Click Me!</Button>
+      <NavBar />
+      <div className="container mx-auto px-4 py-8">
+        <SearchBox onSearch={handleSearch} />
+      </div>
+      <p>{ searchText }</p>
     </>
   )
 }
