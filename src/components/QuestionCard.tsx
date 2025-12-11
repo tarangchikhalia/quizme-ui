@@ -1,26 +1,22 @@
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { useState } from 'react'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 interface QuestionCardProps {
   question: string
   options: string[]
   correctAnswer: number
-  onAnswer?: (isCorrect: boolean) => void
+  selectedOption: number | null
+  onSelectOption: (index: number) => void
+  submitted: boolean
 }
 
-export function QuestionCard({ question, options, correctAnswer, onAnswer }: QuestionCardProps) {
-  const [selectedOption, setSelectedOption] = useState<number | null>(null)
-  const [submitted, setSubmitted] = useState(false)
-
-  const handleSubmit = () => {
-    if (selectedOption !== null) {
-      setSubmitted(true)
-      const isCorrect = selectedOption === correctAnswer
-      onAnswer?.(isCorrect)
-    }
-  }
-
+export function QuestionCard({ 
+  question, 
+  options, 
+  correctAnswer, 
+  selectedOption, 
+  onSelectOption, 
+  submitted 
+}: QuestionCardProps) {
   const getCardColor = () => {
     if (!submitted) return 'bg-secondary-background'
     return selectedOption === correctAnswer ? 'bg-green-400' : 'bg-red-400'
@@ -38,7 +34,7 @@ export function QuestionCard({ question, options, correctAnswer, onAnswer }: Que
             <button
               key={index}
               type="button"
-              onClick={() => !submitted && setSelectedOption(index)}
+              onClick={() => !submitted && onSelectOption(index)}
               disabled={submitted}
               className={`flex items-center gap-3 cursor-pointer p-3 rounded-base border-2 border-border hover:translate-x-1 hover:translate-y-1 transition-transform ${
                 selectedOption === index ? 'bg-main text-main-foreground' : 'bg-secondary-background'
@@ -49,16 +45,6 @@ export function QuestionCard({ question, options, correctAnswer, onAnswer }: Que
           ))}
         </div>
       </CardContent>
-
-      <CardFooter className="justify-end">
-        <Button 
-          onClick={handleSubmit}
-          disabled={selectedOption === null || submitted}
-          className="min-w-32"
-        >
-          Submit
-        </Button>
-      </CardFooter>
     </Card>
   )
 }

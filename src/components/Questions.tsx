@@ -1,6 +1,7 @@
 import { QuestionCard } from './QuestionCard'
 import { ScoreCard } from './ScoreCard'
 import { Progress } from './ui/progress'
+import { Button } from './ui/button'
 import questionsData from '../questions.json'
 import { useState } from 'react'
 
@@ -12,17 +13,33 @@ interface Question {
 
 export function Questions() {
   const questions: Question[] = questionsData
-  const [answeredCount, setAnsweredCount] = useState(0)
+  const [selectedAnswers, setSelectedAnswers] = useState<(number | null)[]>(
+    new Array(questions.length).fill(null)
+  )
+  const [submitted, setSubmitted] = useState(false)
   const [score, setScore] = useState(0)
   const passingScore = 8
 
-  const handleAnswer = (isCorrect: boolean) => {
-    setAnsweredCount(prev => prev + 1)
-    if (isCorrect) {
-      setScore(prev => prev + 1)
+  const handleSelectOption = (questionIndex: number, optionIndex: number) => {
+    const newAnswers = [...selectedAnswers]
+    newAnswers[questionIndex] = optionIndex
+    setSelectedAnswers(newAnswers)
+  }
+
+  const handleSubmitAll = () => {
+    if (!submitted) {
+      setSubmitted(true)
+      let correctCount = 0
+      selectedAnswers.forEach((answer, index) => {
+        if (answer === questions[index].correct) {
+          correctCount++
+        }
+      })
+      setScore(correctCount)
     }
   }
 
+  const answeredCount = selectedAnswers.filter(answer => answer !== null).length
   const progressPercentage = (answeredCount / questions.length) * 100
 
   return (
@@ -37,7 +54,9 @@ export function Questions() {
               question={q.question}
               options={q.options}
               correctAnswer={q.correct}
-              onAnswer={handleAnswer}
+              selectedOption={selectedAnswers[index]}
+              onSelectOption={(optionIndex) => handleSelectOption(index, optionIndex)}
+              submitted={submitted}
             />
           ))}
         </div>
@@ -50,6 +69,13 @@ export function Questions() {
               {answeredCount} / {questions.length}
             </span>
             <Progress value={progressPercentage} className="flex-1" />
+            <Button 
+              onClick={handleSubmitAll}
+              disabled={answeredCount === 0 || submitted}
+              className="min-w-32"
+            >
+              Submit All
+            </Button>
           </div>
         </div>
       </div>
