@@ -23,6 +23,11 @@ function App() {
         <SearchBox onSearch={handleSearch} />
         <Selector onSelect={handleDifficultySelect} selectedDifficulty={difficulty} />
       </div>
+      {searchText && difficulty && (
+        <div className='text-center text-2xl'>
+          <span>Getting 10 questions on {searchText} with difficulty {difficulty}</span>
+        </div>
+      )}
     </>
   )
 }
