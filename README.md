@@ -1,73 +1,90 @@
-# React + TypeScript + Vite
+# QuizMe 🧠
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, interactive quiz application built with React, TypeScript, and Vite, featuring a bold neobrutalism design aesthetic.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Interactive Quiz Interface**: Answer multiple-choice questions with a clean, intuitive UI
+- **Score Tracking**: Real-time score display with passing/failing indicators (passing score: 8/10)
+- **Progress Tracking**: Visual progress bar showing completion status
+- **Neobrutalism Design**: Bold borders, vibrant colors, and distinctive shadows
+- **Difficulty Selection**: Choose between Easy, Medium, and Hard difficulty levels
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React 19** - UI library
+- **TypeScript** - Type safety
+- **Vite** - Build tool and dev server
+- **Tailwind CSS 4** - Utility-first CSS framework
+- **shadcn/ui** - Component library with neobrutalism theme
+- **Radix UI** - Accessible component primitives
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Prerequisites
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Node.js 18+ or Bun
+- npm, yarn, pnpm, or bun
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Installation
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd quizme
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+2. Install dependencies:
+```bash
+npm install
+# or
+bun install
 ```
+
+3. Start the development server:
+```bash
+npm run dev
+# or
+bun dev
+```
+
+4. Open your browser to `http://localhost:5173`
+
+### Build for Production
+
+```bash
+npm run build
+# or
+bun run build
+```
+
+### Preview Production Build
+
+```bash
+npm run preview
+# or
+bun preview
+```
+
+## Customization
+
+### Adding Questions
+
+Edit `questions.json` to add or modify quiz questions:
+
+```json
+{
+  "question": "Your question here?",
+  "options": ["Option 1", "Option 2", "Option 3", "Option 4"],
+  "correct": 1  // Index of correct answer (0-based)
+}
+```
+
+### Styling
+
+The app uses Tailwind CSS with custom neobrutalism theme variables defined in `src/globals.css`. Key design tokens:
+
+- **Colors**: `--main`, `--background`, `--foreground`, `--border`
+- **Shadows**: `--shadow` (4px offset for depth)
+- **Borders**: Thick borders (2-4px) for bold appearance
+- **Typography**: Custom font weights for headings and body text
