@@ -38,10 +38,10 @@ const EXPECTED_QUESTION_COUNT = 10;
 const EXPECTED_OPTIONS_COUNT = 4;
 
 function validateEnvironmentVariables(): void {
-  if (!process.env.OPENAI_API_KEY) {
+  if (!import.meta.env.VITE_OPENAI_API_KEY) {
     throw new Error('OPENAI_API_KEY environment variable is required');
   }
-  if (!process.env.OPENAI_MODEL_NAME) {
+  if (!import.meta.env.VITE_OPENAI_MODEL_NAME) {
     throw new Error('OPENAI_MODEL_NAME environment variable is required');
   }
 }
@@ -49,8 +49,8 @@ function validateEnvironmentVariables(): void {
 function createModel(): ChatOpenAI {
   validateEnvironmentVariables();
   return new ChatOpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-    modelName: process.env.OPENAI_MODEL_NAME,
+    apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+    modelName: import.meta.env.VITE_OPENAI_MODEL_NAME,
   });
 }
 

@@ -1,18 +1,26 @@
 import { QuestionCard } from './QuestionCard'
 import { ScoreCard } from './ScoreCard'
 import { QuestionsFooter } from './QuestionsFooter'
-import questionsData from '../questions.json'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { Question } from '../types/Questions'
 
-export function Questions() {
-  const questions: Question[] = questionsData
+interface QuestionsProps {
+  questions: Question[]
+}
+
+export function Questions({ questions }: QuestionsProps) {
   const [selectedAnswers, setSelectedAnswers] = useState<(number | null)[]>(
     new Array(questions.length).fill(null)
   )
   const [submitted, setSubmitted] = useState(false)
   const [score, setScore] = useState(0)
   const passingScore = 8
+
+  useEffect(() => {
+    setSelectedAnswers(new Array(questions.length).fill(null))
+    setSubmitted(false)
+    setScore(0)
+  }, [questions])
 
   const handleSelectOption = (questionIndex: number, optionIndex: number) => {
     const newAnswers = [...selectedAnswers]
